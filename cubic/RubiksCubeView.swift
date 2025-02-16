@@ -8,14 +8,12 @@ struct RubiksCubeView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         let scnView = SCNView()
         scnView.scene = cubeManager.scene
-        scnView.allowsCameraControl = true  // Let the user orbit/zoom.
+        scnView.allowsCameraControl = true  // Enable user orbit/zoom
         scnView.autoenablesDefaultLighting = false
         scnView.backgroundColor = UIColor.clear
-        // Enable antialiasing for smoother edges.
-        scnView.antialiasingMode = .multisampling4X
+        scnView.antialiasingMode = .multisampling4X  // Smoother edges
         return scnView
     }
     
     func updateUIView(_ uiView: SCNView, context: Context) { }
 }
-

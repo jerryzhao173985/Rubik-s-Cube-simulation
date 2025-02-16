@@ -5,79 +5,35 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // Background: a modern, dynamic gradient
-            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
+            // Modern dynamic background gradient
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray.opacity(0.8)]),
+                           startPoint: .top,
+                           endPoint: .bottom)
                 .ignoresSafeArea()
             
-            VStack {
-                // Title at the top
-                Text("Rubik's Cube Simulator")
-                    .font(.largeTitle)
-                    .bold()
+            VStack(spacing: 0) {
+                // A minimal title with modern rounded font
+                Text("Rubik's Cube")
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.top, 40)
+                    .padding(.bottom, 10)
                 
-                // The 3D cube view expands to fill available space
+                // The 3D cube view (full screen, with minimal padding)
                 RubiksCubeView(cubeManager: cubeManager)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding()
+                    .padding(.horizontal, 20)
                 
-                // Control Panel: buttons for manual moves, scramble and solve
+                // Control Panel: buttons in a bottom sheet style
                 ControlPanelView(cubeManager: cubeManager)
-                    .padding(.bottom, 20)
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(16)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 30)
             }
         }
-    }
-}
-
-struct ControlPanelView: View {
-    @ObservedObject var cubeManager: CubeManager
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            HStack(spacing: 12) {
-                CubeButton(title: "U") { cubeManager.performMove(.U, record: true) }
-                CubeButton(title: "U'") { cubeManager.performMove(.UPrime, record: true) }
-                CubeButton(title: "D") { cubeManager.performMove(.D, record: true) }
-                CubeButton(title: "D'") { cubeManager.performMove(.DPrime, record: true) }
-            }
-            HStack(spacing: 12) {
-                CubeButton(title: "L") { cubeManager.performMove(.L, record: true) }
-                CubeButton(title: "L'") { cubeManager.performMove(.LPrime, record: true) }
-                CubeButton(title: "R") { cubeManager.performMove(.R, record: true) }
-                CubeButton(title: "R'") { cubeManager.performMove(.RPrime, record: true) }
-            }
-            HStack(spacing: 12) {
-                CubeButton(title: "F") { cubeManager.performMove(.F, record: true) }
-                CubeButton(title: "F'") { cubeManager.performMove(.FPrime, record: true) }
-                CubeButton(title: "B") { cubeManager.performMove(.B, record: true) }
-                CubeButton(title: "B'") { cubeManager.performMove(.BPrime, record: true) }
-            }
-            HStack(spacing: 12) {
-                CubeButton(title: "Scramble") { cubeManager.scramble() }
-                CubeButton(title: "Solve") { cubeManager.startUnscramble() }
-            }
-        }
-    }
-}
-
-/// A custom button style for cube moves.
-struct CubeButton: View {
-    let title: String
-    let action: () -> Void
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-                .frame(minWidth: 60, minHeight: 44)
-                .padding(.horizontal, 8)
-                .background(Color.black.opacity(0.6))
-                .cornerRadius(10)
-                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 2, y: 2)
-        }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -86,4 +42,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
